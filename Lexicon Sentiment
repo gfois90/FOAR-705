@@ -1,0 +1,73 @@
+library(ggplot2)
+library(tm)
+library(wordcloud)
+library(syuzhet)
+library(data.table)
+
+setwd("C://Users//Grant//Desktop//FOAR")
+mydata <- fread("G2vsWE.txt", sep = "\t", fill = FALSE)
+
+texts <- readLines("G2vsWE.txt")
+
+docs <- Corpus(VectorSource(texts))
+
+#clean document
+docs <- tm_map(docs, content_transformer(tolower))
+docs <- tm_map(docs, removeNumbers)
+docs <- tm_map(docs, removeWords, stopwords ("english"))
+docs <- tm_map(docs, removePunctuation)
+docs <- tm_map(docs, stripWhitespace)
+docs <- tm_map(docs, stemDocument)
+
+#create dtm
+
+dtm <- TermDocumentMatrix(docs)
+mat <- as.matrix(dtm)
+y <- sort(rowSums(mat),decreasing=TRUE)
+
+#data frame
+
+d <- data.frame(word = names(y), freq=y)
+head(d,10)
+
+
+#fetch sentiment words from text
+
+Sentiment <- get_nrc_sentiment(texts)
+text <- cbind(texts,Sentiment)
+
+#count the senitment words by cat.
+
+TotalSentiment <- data.frame(colSums(text[,c(2:11)]))
+names(TotalSentiment) <- "count"
+TotalSentiment <- cbind("sentiment" = rownames(TotalSentiment), TotalSentiment)
+rownames(TotalSentiment) <- NULL
+
+#getting the sentence/sentiment score 
+
+sentence = get_sentences(texts)
+sentiment_vector = get_sentiment(sentence, method = "syuzhet")
+sentence_sent = data.frame(sentence, sentiment_vector)
+
+#words as tokens, not sentences 
+
+poa_word_v <- get_tokens(texts, pattern = "\\W")
+syuzhet_vector <- get_sentiment(poa_word_v, method="syuzhet")
+
+#total sentiment score of all text
+
+ggplot (data = TotalSentiment, aes(x = sentiment, y = count)) +
+  geom_bar(aes(fill = sentiment), stat = "identity") +
+  theme(legend.position = "none") +
+  xlab("Emotional Scope") + ylab("Term Frequency") + ggtitle("G2 vs World Elite")
+
+
+
+
+#exporting labelled sentences
+
+ordering.index <- order(sentence_sent[2])
+sentence_sent <- sentence_sent[ordering.index,]
+
+write.table(sentence_sent, "C:\\Users\\Grant\\Desktop\\Test03.txt", sep="\t", quote = FALSE)
+
