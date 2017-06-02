@@ -17,7 +17,7 @@ image.resize(width, height);
   ShapeBasedPlacer placer = new ShapeBasedPlacer(imageShape);
   
 new WordCram(this)
-.fromTextFile ("C:\\Users\\Grant\\Desktop\\FOAR\\Pos2.txt")
+.fromTextFile ("C:\\Users\\Grant\\Desktop\\FOAR\\Pos.txt")
 .excludeNumbers()
 .upperCase()
 .withStopWords("squid squid1 squid2 squid3 squid4 [:]")
@@ -34,7 +34,7 @@ new WordCram(this)
   placer = new ShapeBasedPlacer(imageShape);
   
   new WordCram(this)
-    .fromTextFile("C:\\Users\\Grant\\Desktop\\FOAR\\Neg2.txt")
+    .fromTextFile("C:\\Users\\Grant\\Desktop\\FOAR\\Neg.txt")
     .excludeNumbers()
     .lowerCase()
     .withPlacer(placer)
