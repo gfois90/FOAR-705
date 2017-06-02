@@ -20,7 +20,6 @@ The following was written in Visual Studio
 
 I have included a basic IRC to connect to Twitch IRC. It relays chat but lacks logging functionality. 
 
-I have included an example live chat .txt file that contains the harvested live chat data of a twitch broadcast. This chat in this file is raw, uncleaned and unlabelled. 
 
 
 
