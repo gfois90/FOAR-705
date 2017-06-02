@@ -49,11 +49,6 @@ sentence = get_sentences(texts)
 sentiment_vector = get_sentiment(sentence, method = "syuzhet")
 sentence_sent = data.frame(sentence, sentiment_vector)
 
-#words as tokens, not sentences 
-
-poa_word_v <- get_tokens(texts, pattern = "\\W")
-syuzhet_vector <- get_sentiment(poa_word_v, method="syuzhet")
-
 #total sentiment score of all text
 
 ggplot (data = TotalSentiment, aes(x = sentiment, y = count)) +
