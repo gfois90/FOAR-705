@@ -9,7 +9,7 @@ library(rpart)#classification, regression
 
 #import dataset
 
-setwd("C://Users//Grant//Desktop//")
+setwd("C://Users//Grant//Desktop//FOAR")
 trainsent = read.csv ("Trainsent.csv", header = T, stringsAsFactors = FALSE)
 str(trainsent)
 trainsent$class <-factor(Trainsent$class)
@@ -89,34 +89,12 @@ average_top20
 #show freq. in a bar plot
 barplot(mean_train[1:20], border = NA, las = 3, xlab = "top 20 words", ylab = "Frequency", ylim = c(0,3))
 
-#remvoe pointless words
-
-mystopwords <- c("film", "films", "get", "one", "two", "three", "just", "movies", "movie")
-train_corpus_m <- tm_map(train_corpus_m, removeWords, mystopwords)
-
-train_dtm_m = DocumentTermMatrix(train_corpus_m, control = list(tolower = T, removeNumbers = T, removePunctuation = T, stopwords = T, stripWhitespace = T, stemming = T))
-dim(train_dtm_m)
-
-train_rmspa_m = removeSparseTerms(train_dtm_m, 0.80)
-dim(train_rmspa_m)
-
-#show avg. freq. with our classified words removed 
-
-mean_train_m = sort(colMeans(as.matrix(train_rmspa_m)), decreasing = T)
-mean_train_m[1:20]
-average_top20_m = mean(mean_train_m[1:20])
-average_top20_m
-
-barplot(mean_train_m[1:20], border = NA, las = 3, xlab = "top 20 words", ylab = "Frequency", ylim = c(0,3))
-
-#wordcloud
-
-wordcloud(names(mean_train_m[1:30]), mean_train_m[1:30], scale = c(5,1), colors=brewer.pal(8, "Dark2"))
 
 #SENTIMENT CLASSIFICAITON 
 #GENERATE TRAINING DATASET
 
 train_BoWfreq <- as.matrix(train_rmspa_m)
+
 # combine the sentiment label with term frequencies of the BoW in training data 
 train_data_m = data.frame(y=train_m$class, x=train_BoWfreq)
 summary(train_data_m)
@@ -128,15 +106,14 @@ length(train_BoW_m)
 #Now to generate test1_data_n which includes test1's term freq. of words slected from the train data
 
 test1_corpus_m <- Corpus(DataframeSource(as.matrix(test1_m$text)))
-#generate test1s dtm based on bag of words decided by training data
 
+#generate test1s dtm based on bag of words decided by training data
 bow_test1_m <- DocumentTermMatrix(test1_corpus_m, control = list(tolower = T, removeNumbers = T, removePunctuation = T, stopwords = T, stripWhitespace = T, stemming = T, dictionary = train_BoW_m))
 
 str(bow_test1_m)
 dim(bow_test1_m)
 
 #transform format from dtm to matrix
-
 test1_bowfreq_m <- as.matrix(bow_test1_m)
 
 #combine the sentiment label with the term freq. of the bow in test 1 into a data frame
@@ -145,6 +122,7 @@ test1_data_m = data.frame(y=test1_m$class, x=test1_bowfreq_m)
 str(test1_data_m)
 summary(test1_data_m)
 
+#test accuracy 
 
 library(e1071)
 
