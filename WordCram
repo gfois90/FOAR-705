@@ -18,7 +18,6 @@ image.resize(width, height);
   
 new WordCram(this)
 .fromTextFile ("C:\\Users\\Grant\\Desktop\\FOAR\\Pos.txt")
-.excludeNumbers()
 .upperCase()
 .withStopWords("squid squid1 squid2 squid3 squid4 [:]")
 .withPlacer(placer)
@@ -35,7 +34,6 @@ new WordCram(this)
   
   new WordCram(this)
     .fromTextFile("C:\\Users\\Grant\\Desktop\\FOAR\\Neg.txt")
-    .excludeNumbers()
     .lowerCase()
     .withPlacer(placer)
     .withStopWords("squid squid1 squid2 squid3 squid4 [:]")
