@@ -12,7 +12,7 @@ I have included code to conduct a lexicon analysis on the example text. (You mus
 
 I have included code to train a machine learning classifier (You must use your own destinations and filenames)
 
-The following was writting in Processing and WordCram
+The following was written in Processing and WordCram
 
 I have included code to generate a Ying-Yang wordcloud in WordCram. (You must use your own destinations and filenames)
 
