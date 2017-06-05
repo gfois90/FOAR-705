@@ -64,5 +64,5 @@ ggplot (data = TotalSentiment, aes(x = sentiment, y = count)) +
 ordering.index <- order(sentence_sent[2])
 sentence_sent <- sentence_sent[ordering.index,]
 
-write.table(sentence_sent, "C:\\Users\\Grant\\Desktop\\Test03.txt", sep="\t", quote = FALSE)
+write.table(sentence_sent, "C:\\Users\\", sep="\t", quote = FALSE)
 
