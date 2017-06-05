@@ -5,9 +5,9 @@ library(syuzhet)
 library(data.table)
 
 setwd("C://Users//Grant//Desktop//FOAR")
-mydata <- fread("G2vsWE.txt", sep = "\t", fill = FALSE)
+mydata <- fread(".txt", sep = "\t", fill = FALSE)
 
-texts <- readLines("G2vsWE.txt")
+texts <- readLines(".txt")
 
 docs <- Corpus(VectorSource(texts))
 
@@ -54,7 +54,7 @@ sentence_sent = data.frame(sentence, sentiment_vector)
 ggplot (data = TotalSentiment, aes(x = sentiment, y = count)) +
   geom_bar(aes(fill = sentiment), stat = "identity") +
   theme(legend.position = "none") +
-  xlab("Emotional Scope") + ylab("Term Frequency") + ggtitle("G2 vs World Elite")
+  xlab("Emotional Scope") + ylab("Term Frequency") + ggtitle("")
 
 
 
